@@ -16,8 +16,11 @@ void main(void){
     Interrupts_init();
 	//don't forget TRIS for your output!
 
+    LATCbits.LATC5=0;   //set initial output state
+    TRISCbits.TRISC5=0; 
+
     while(1){
 		//write your code to call angle2PWM() to set the servo angle
-
+        angle2PWM(90);
     }
 }
