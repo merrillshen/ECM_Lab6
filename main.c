@@ -8,6 +8,7 @@
 
 #include <xc.h>
 #include "rc_servo.h"
+#include "ADC.h"
 
 #define _XTAL_FREQ 64000000 //note intrinsic _delay function is 62.5ns at 64,000,000Hz  
 
@@ -17,25 +18,17 @@ void main(void){
     
     Interrupts_init();
     Timer0_init();
+    ADC_init();     
 
-    int count = 0;
-    unsigned int increasing = 1;        
+    unsigned int set_brightness = 60;
     
     while(1){
 		//write your code to call angle2PWM() to set the servo angle
-
-        while (increasing == 1) {           
-            angle2PWM(count);
-            count += 1;
-            __delay_ms(50);
-            if (count == 90) {increasing=0;}
+        if (ADC_getval() > set_brightness) {
+            angle2PWM(90);
         }
-        
-        while (increasing == 0) {
-            angle2PWM(count);
-            count -= 1;
-            __delay_ms(50);
-            if (count == -90) {increasing=1;}
+        else {
+            angle2PWM(-90);
         }
     }
 }

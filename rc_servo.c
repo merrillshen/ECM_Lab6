@@ -64,6 +64,6 @@ void write16bitTMR0val(unsigned int tmp)
  * off_period is the remaining time left (calculate from on_period and T_PERIOD)
 ************************************/
 void angle2PWM(int angle){
-    on_period = 1000 + 17*(angle + 90);	//avoid floating point numbers and be careful of calculation order...
+    on_period = 1000 + (17*(angle+90)); // angle is now from 0-180
     off_period = T_PERIOD - on_period;
 }
