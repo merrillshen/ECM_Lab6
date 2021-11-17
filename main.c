@@ -12,15 +12,30 @@
 #define _XTAL_FREQ 64000000 //note intrinsic _delay function is 62.5ns at 64,000,000Hz  
 
 void main(void){
-    Timer0_init();
+    LATDbits.LATD5=0;   //set initial output state
+    TRISDbits.TRISD5=0;
+    
     Interrupts_init();
-	//don't forget TRIS for your output!
+    Timer0_init();
 
-    LATCbits.LATC5=0;   //set initial output state
-    TRISCbits.TRISC5=0; 
-
+    int count = 0;
+    unsigned int increasing = 1;        
+    
     while(1){
 		//write your code to call angle2PWM() to set the servo angle
-        angle2PWM(90);
+
+        while (increasing == 1) {           
+            angle2PWM(count);
+            count += 1;
+            __delay_ms(50);
+            if (count == 90) {increasing=0;}
+        }
+        
+        while (increasing == 0) {
+            angle2PWM(count);
+            count -= 1;
+            __delay_ms(50);
+            if (count == -90) {increasing=1;}
+        }
     }
 }
