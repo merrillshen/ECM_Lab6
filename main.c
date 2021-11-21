@@ -35,7 +35,14 @@ void main(void){
     motorR.dir_pin=6; 						//pin RG6 controls direction
     motorR.PWMperiod=PWMcycle; 			//store PWMperiod for motor
     
-    while(1){
-        turnRight(&motorL,&motorR);
+    while(1){ 
+        clockwisesq(&motorL,&motorR);
+        __delay_ms(50);
+        turn180Right(&motorL,&motorR);
+        __delay_ms(15);
+        anticlockwisesq(&motorL,&motorR);
+        __delay_ms(50);
+        turn180Right(&motorL,&motorR);
+        __delay_ms(15);
     }
 }
